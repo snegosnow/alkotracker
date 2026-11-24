@@ -2,11 +2,10 @@
 import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Activity, LayoutDashboard, ArrowLeftRight, Tags, Settings, LogOut } from "lucide-react";
+import { Activity, LayoutDashboard, LogOut } from "lucide-react";
 import { authClient } from "@/lib/auth-client";
 const links = [
   { href: "/statistics", title: "Статистика", icon: LayoutDashboard },
-  { href: "/purchases", title: "Мои покупки", icon: ArrowLeftRight },
 ];
 export function Shell({ email, children }: { email: string; children: React.ReactNode }) {
   const path = usePathname();

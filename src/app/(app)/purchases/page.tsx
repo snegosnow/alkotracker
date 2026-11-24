@@ -1,2 +1,2 @@
-import { Purchases } from "@/components/purchases";
-export default function PurchasesPage() { return <Purchases/>; }
+import { redirect } from "next/navigation";
+export default function PurchasesPage() { redirect("/statistics"); }

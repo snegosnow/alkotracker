@@ -1,6 +1,5 @@
 "use client";
 import { useState } from "react";
-import Link from "next/link";
 import { Activity, Wine, Cigarette, CalendarDays, MapPin } from "lucide-react";
 import type { Observation } from "@/lib/habbits";
 
@@ -16,7 +15,7 @@ export function Statistics({ observations }: { observations: Observation[] }) {
   const maximum = Math.max(...rows.map(row => row.value), 1) * 1.15;
   const format = (value: number) => value.toLocaleString("ru", { maximumFractionDigits: 2 });
   return <div className="statistics">
-    <header className="page-heading"><div><p className="eyebrow">УЗБЕКИСТАН · ДАННЫЕ ВОЗ</p><h1>Статистика потребления</h1><p className="muted">Алкоголь и табак в цифрах. Динамика среди населения от 15 лет.</p></div><Link className="primary" href="/purchases">Мои покупки</Link></header>
+    <header className="page-heading"><div><p className="eyebrow">УЗБЕКИСТАН · ДАННЫЕ ВОЗ</p><h1>Статистика потребления</h1><p className="muted">Алкоголь и табак в цифрах. Динамика среди населения от 15 лет.</p></div></header>
     <div className="category-tabs" aria-label="Вид статистики">
       <button className={category === "alcohol" ? "selected" : ""} onClick={() => setCategory("alcohol")}><Wine size={20}/>Алкоголь</button>
       <button className={category === "tobacco" ? "selected" : ""} onClick={() => setCategory("tobacco")}><Cigarette size={20}/>Табак</button>
