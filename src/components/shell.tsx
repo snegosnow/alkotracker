@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Activity, LayoutDashboard, LogOut } from "lucide-react";
@@ -11,6 +11,13 @@ export function Shell({ email, children }: { email: string; children: React.Reac
   const path = usePathname();
   const [error, setError] = useState("");
   const [busy, setBusy] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  useEffect(() => {
+    const update = () => setScrolled(window.scrollY > 80);
+    update();
+    window.addEventListener("scroll", update, { passive: true });
+    return () => window.removeEventListener("scroll", update);
+  }, []);
   async function logout() {
     setBusy(true);
     try {
@@ -21,9 +28,9 @@ export function Shell({ email, children }: { email: string; children: React.Reac
   }
   return <div className="app-shell">
     <a href="#main-content" className="skip-link">К содержимому</a>
-    <aside className="sidebar">
+    <aside className={`sidebar ${scrolled ? "scrolled" : ""}`}>
       <Link href="/statistics" className="brand"><span className="brand-icon"><Activity size={23}/></span>habbits<span className="brand-dot">.</span></Link>
-      <p className="nav-caption">Статистика потребления</p>
+      <p className="nav-caption">Данные ВОЗ</p>
       <nav aria-label="Основная навигация">{links.map(link => <Link key={link.href} className={`nav-link ${path === link.href ? "active" : ""}`} href={link.href} aria-current={path === link.href ? "page" : undefined}><link.icon size={20}/><span>{link.title}</span></Link>)}</nav>
       <div className="sidebar-bottom">{!email && <Link href="/login">Войти в аккаунт</Link>}<span className="avatar">{email.slice(0, 1).toUpperCase()}</span><span className="account-email" title={email}>{email}</span><button className="icon-button" onClick={logout} disabled={busy} hidden={!email} aria-label="Выйти"><LogOut size={18}/></button></div>
       {error && <p role="alert" className="form-error">{error}</p>}
